@@ -39,7 +39,7 @@ namespace Graph {
 		ZedGraph::ZedGraphControl^ zedGraphControl1;
 
 		System::Windows::Forms::TabPage^ tabPage1;
-		System::Windows::Forms::Button^ button3;
+
 		System::Windows::Forms::TextBox^ tbNMax;
 		System::Windows::Forms::Button^ button2;
 		System::Windows::Forms::Button^ button1;
@@ -125,7 +125,6 @@ namespace Graph {
 			   this->dataGridViewTextBoxColumn8 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			   this->dataGridViewTextBoxColumn9 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			   this->dataGridViewTextBoxColumn10 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			   this->button3 = (gcnew System::Windows::Forms::Button());
 			   this->tbNMax = (gcnew System::Windows::Forms::TextBox());
 			   this->button2 = (gcnew System::Windows::Forms::Button());
 			   this->button1 = (gcnew System::Windows::Forms::Button());
@@ -165,8 +164,7 @@ namespace Graph {
 			   // 
 			   // tableLayoutPanel1
 			   // 
-			   this->tableLayoutPanel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top
-				   | System::Windows::Forms::AnchorStyles::Bottom)
+			   this->tableLayoutPanel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				   | System::Windows::Forms::AnchorStyles::Left)
 				   | System::Windows::Forms::AnchorStyles::Right));
 			   this->tableLayoutPanel1->ColumnCount = 2;
@@ -193,7 +191,7 @@ namespace Graph {
 			   this->zedGraphControl2->IsSynchronizeXAxes = true;
 			   this->zedGraphControl2->IsSynchronizeYAxes = true;
 			   this->zedGraphControl2->Location = System::Drawing::Point(456, 4);
-			   this->zedGraphControl2->Margin = System::Windows::Forms::Padding(4);
+			   this->zedGraphControl2->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->zedGraphControl2->Name = L"zedGraphControl2";
 			   this->zedGraphControl2->ScrollGrace = 0;
 			   this->zedGraphControl2->ScrollMaxX = 0;
@@ -214,7 +212,7 @@ namespace Graph {
 			   this->zedGraphControl1->IsSynchronizeXAxes = true;
 			   this->zedGraphControl1->IsSynchronizeYAxes = true;
 			   this->zedGraphControl1->Location = System::Drawing::Point(4, 4);
-			   this->zedGraphControl1->Margin = System::Windows::Forms::Padding(4);
+			   this->zedGraphControl1->Margin = System::Windows::Forms::Padding(4, 4, 4, 4);
 			   this->zedGraphControl1->Name = L"zedGraphControl1";
 			   this->zedGraphControl1->ScrollGrace = 0;
 			   this->zedGraphControl1->ScrollMaxX = 0;
@@ -230,14 +228,13 @@ namespace Graph {
 			   // richTextBox1
 			   // 
 			   this->richTextBox1->Dock = System::Windows::Forms::DockStyle::Fill;
-			   this->richTextBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12,
-				   System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			   this->richTextBox1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				   static_cast<System::Byte>(204)));
-			   this->richTextBox1->Location = System::Drawing::Point(456, 313);
+			   this->richTextBox1->Location = System::Drawing::Point(455, 313);
 			   this->richTextBox1->Name = L"richTextBox1";
 			   this->richTextBox1->ReadOnly = true;
 			   this->richTextBox1->ScrollBars = System::Windows::Forms::RichTextBoxScrollBars::Vertical;
-			   this->richTextBox1->Size = System::Drawing::Size(446, 305);
+			   this->richTextBox1->Size = System::Drawing::Size(447, 305);
 			   this->richTextBox1->TabIndex = 4;
 			   this->richTextBox1->Text = L"";
 			   this->richTextBox1->TextChanged += gcnew System::EventHandler(this, &MyForm::richTextBox1_TextChanged);
@@ -320,7 +317,6 @@ namespace Graph {
 			   // tabPage1
 			   // 
 			   this->tabPage1->Controls->Add(this->tabControl2);
-			   this->tabPage1->Controls->Add(this->button3);
 			   this->tabPage1->Controls->Add(this->tbNMax);
 			   this->tabPage1->Controls->Add(this->button2);
 			   this->tabPage1->Controls->Add(this->button1);
@@ -336,8 +332,7 @@ namespace Graph {
 			   // 
 			   // tabControl2
 			   // 
-			   this->tabControl2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top
-				   | System::Windows::Forms::AnchorStyles::Bottom)
+			   this->tabControl2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 				   | System::Windows::Forms::AnchorStyles::Left)
 				   | System::Windows::Forms::AnchorStyles::Right));
 			   this->tabControl2->Controls->Add(this->tabPage3);
@@ -363,9 +358,9 @@ namespace Graph {
 			   // dataGridView1
 			   // 
 			   this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			   this->dataGridView1->Columns->AddRange(gcnew cli::array<System::Windows::Forms::DataGridViewColumn^>(5) {
-				   this->xi,
-					   this->vi, this->v2i, this->Column3, this->Column4
+			   this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+				   this->xi, this->vi,
+					   this->v2i, this->Column3, this->Column4
 			   });
 			   this->dataGridView1->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->dataGridView1->Location = System::Drawing::Point(3, 3);
@@ -429,7 +424,7 @@ namespace Graph {
 			   // dataGridView2
 			   // 
 			   this->dataGridView2->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			   this->dataGridView2->Columns->AddRange(gcnew cli::array<System::Windows::Forms::DataGridViewColumn^>(5) {
+			   this->dataGridView2->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
 				   this->dataGridViewTextBoxColumn1,
 					   this->dataGridViewTextBoxColumn2, this->dataGridViewTextBoxColumn3, this->dataGridViewTextBoxColumn4, this->dataGridViewTextBoxColumn5
 			   });
@@ -495,7 +490,7 @@ namespace Graph {
 			   // dataGridView3
 			   // 
 			   this->dataGridView3->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			   this->dataGridView3->Columns->AddRange(gcnew cli::array<System::Windows::Forms::DataGridViewColumn^>(5) {
+			   this->dataGridView3->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
 				   this->dataGridViewTextBoxColumn6,
 					   this->dataGridViewTextBoxColumn7, this->dataGridViewTextBoxColumn8, this->dataGridViewTextBoxColumn9, this->dataGridViewTextBoxColumn10
 			   });
@@ -546,16 +541,6 @@ namespace Graph {
 			   this->dataGridViewTextBoxColumn10->MinimumWidth = 6;
 			   this->dataGridViewTextBoxColumn10->Name = L"dataGridViewTextBoxColumn10";
 			   this->dataGridViewTextBoxColumn10->Width = 250;
-			   // 
-			   // button3
-			   // 
-			   this->button3->Location = System::Drawing::Point(839, 193);
-			   this->button3->Name = L"button3";
-			   this->button3->Size = System::Drawing::Size(189, 36);
-			   this->button3->TabIndex = 25;
-			   this->button3->Text = L"Основная задача №2";
-			   this->button3->UseVisualStyleBackColor = true;
-			   this->button3->Click += gcnew System::EventHandler(this, &MyForm::button3_Click);
 			   // 
 			   // tbNMax
 			   // 
@@ -649,28 +634,24 @@ namespace Graph {
 		SolveTask(2, false);
 	}
 
-	private: System::Void button3_Click(System::Object^ sender, System::EventArgs^ e) {
-		task = 3;
-		SolveTask(3, false);
-	}
-
 	private: void SolveTask(int Task, bool resetScale) {
 		GraphPane^ panel = zedGraphControl1->GraphPane;
 		GraphPane^ panel2 = zedGraphControl2->GraphPane;
 
-		// очистка графиков
+		// Очистка графиков
 		panel->CurveList->Clear();
 		panel->GraphObjList->Clear();
 		panel2->CurveList->Clear();
 		panel2->GraphObjList->Clear();
 
-		// наборы точек
-		PointPairList^ f1_list = gcnew ZedGraph::PointPairList();   // основное решение
-		PointPairList^ f2_list = gcnew ZedGraph::PointPairList();   // решение на половинном шаге
-		PointPairList^ exact_list = gcnew ZedGraph::PointPairList();// аналитическое
-		PointPairList^ err_list = gcnew ZedGraph::PointPairList();  // ошибки
+		// Наборы точек для графиков
+		PointPairList^ f1_list = gcnew ZedGraph::PointPairList(); // основное/численное
+		PointPairList^ f2_list = gcnew ZedGraph::PointPairList(); // решение на половинном шаге
+		PointPairList^ exact_list = gcnew ZedGraph::PointPairList(); // аналитическое (только для тестовой)
+		PointPairList^ err_list = gcnew ZedGraph::PointPairList(); // ошибки
 
 		if (resetScale) {
+			// Сброс масштаба
 			scaleX0->Text = "0";
 			scaleX1->Text = "1";
 			scaleY0->Text = "0";
@@ -679,7 +660,7 @@ namespace Graph {
 
 		int N = System::Convert::ToInt32(tbNMax->Text);
 
-		// очистка таблиц
+		// Очистка таблиц
 		dataGridView1->Rows->Clear();
 		dataGridView1->Columns->Clear();
 		dataGridView2->Rows->Clear();
@@ -687,18 +668,19 @@ namespace Graph {
 		dataGridView3->Rows->Clear();
 		dataGridView3->Columns->Clear();
 
-		// набор N для исследования сходимости
+		// Набор n для таблиц (можно менять при необходимости)
 		std::vector<int> nValues = { 10, 20, 50, 80, 100, 200, 500, 800, 1000 };
 
-		// ---------- ТЕСТОВАЯ ЗАДАЧА ----------
+		// =================== ТЕСТОВАЯ ЗАДАЧА ===================
 		if (Task == 1) {
 			TestTask solverTest(N);
 			std::vector<std::vector<double>> result = solverTest.calculate();
 
-			// Таблица 1
+			// --------- Таблица 1: i, x_i, u_i, v_i, u_i - v_i ---------
 			array<String^>^ columnNames1 = { "i", "x_i", "u_i", "v_i", "u_i - v_i" };
-			for each (String ^ colName in columnNames1)
+			for each (String ^ colName in columnNames1) {
 				dataGridView1->Columns->Add(colName, colName);
+			}
 
 			double maxErrorForN = 0.0;
 			double xAtMaxErr = 0.0;
@@ -706,11 +688,11 @@ namespace Graph {
 			for (int i = 0; i < (int)result.size(); ++i) {
 				int rowIndex = dataGridView1->Rows->Add();
 
-				dataGridView1->Rows[rowIndex]->Cells[0]->Value = result[i][0];
-				dataGridView1->Rows[rowIndex]->Cells[1]->Value = result[i][1];
-				dataGridView1->Rows[rowIndex]->Cells[2]->Value = result[i][2];
-				dataGridView1->Rows[rowIndex]->Cells[3]->Value = result[i][3];
-				dataGridView1->Rows[rowIndex]->Cells[4]->Value = result[i][4];
+				dataGridView1->Rows[rowIndex]->Cells[0]->Value = result[i][0]; // i
+				dataGridView1->Rows[rowIndex]->Cells[1]->Value = result[i][1]; // x_i
+				dataGridView1->Rows[rowIndex]->Cells[2]->Value = result[i][2]; // u_i
+				dataGridView1->Rows[rowIndex]->Cells[3]->Value = result[i][3]; // v_i
+				dataGridView1->Rows[rowIndex]->Cells[4]->Value = result[i][4]; // u_i - v_i
 
 				double err = fabs(result[i][4]);
 				if (err > maxErrorForN) {
@@ -718,15 +700,17 @@ namespace Graph {
 					xAtMaxErr = result[i][1];
 				}
 
+				// точки для графиков
 				exact_list->Add(result[i][1], result[i][2]);
 				f1_list->Add(result[i][1], result[i][3]);
 				err_list->Add(result[i][1], err);
 			}
 
-			// Таблица 2 (табл.4)
+			// --------- Таблица 2: порядок сходимости (по n) ----------
 			array<String^>^ columnNames2 = { "n", "max|u_i - v_i|", "Отношение" };
-			for each (String ^ colName in columnNames2)
+			for each (String ^ colName in columnNames2) {
 				dataGridView2->Columns->Add(colName, colName);
+			}
 
 			double prevError = -1.0;
 			for (int k = 0; k < (int)nValues.size(); ++k) {
@@ -745,13 +729,15 @@ namespace Graph {
 				int rowIndex = dataGridView2->Rows->Add();
 				dataGridView2->Rows[rowIndex]->Cells[0]->Value = nCurr;
 				dataGridView2->Rows[rowIndex]->Cells[1]->Value = maxErr;
-				if (prevError > 0.0)
+
+				if (prevError > 0.0) {
 					dataGridView2->Rows[rowIndex]->Cells[2]->Value = prevError / maxErr;
+				}
 
 				prevError = maxErr;
 			}
 
-			// Таблица 3 (часть по тестовой задаче, табл.6)
+			// --------- Таблица 3: E1 и логарифмы (для тестовой задачи) ----------
 			array<String^>^ columnNames3 = {
 				"n",
 				"E1 = max|u_i - v_i|",
@@ -760,8 +746,9 @@ namespace Graph {
 				"-lg E1",
 				"-lg E2"
 			};
-			for each (String ^ colName in columnNames3)
+			for each (String ^ colName in columnNames3) {
 				dataGridView3->Columns->Add(colName, colName);
+			}
 
 			for (int k = 0; k < (int)nValues.size(); ++k) {
 				int nCurr = nValues[k];
@@ -779,15 +766,15 @@ namespace Graph {
 				int rowIndex = dataGridView3->Rows->Add();
 				dataGridView3->Rows[rowIndex]->Cells[0]->Value = nCurr;
 				dataGridView3->Rows[rowIndex]->Cells[1]->Value = E1;
+				// E2 и -lg E2 оставляем пустыми, заполняются для основной задачи
 
 				double lgN = log10((double)nCurr);
 				double lgE1 = (E1 > 0.0) ? -log10(E1) : 0.0;
 				dataGridView3->Rows[rowIndex]->Cells[3]->Value = lgN;
 				dataGridView3->Rows[rowIndex]->Cells[4]->Value = lgE1;
-				// ячейки E2 и -lgE2 будут заполнены при расчёте основной задачи
 			}
 
-			// Графики
+			// --------- Графики тестовой задачи ----------
 			double xMin = Convert::ToDouble(scaleX0->Text);
 			double xMax = Convert::ToDouble(scaleX1->Text);
 			double yMin = Convert::ToDouble(scaleY0->Text);
@@ -819,27 +806,29 @@ namespace Graph {
 			zedGraphControl2->AxisChange();
 			zedGraphControl2->Invalidate();
 
-			// текстовая сводка
+			// --------- Справка ---------
 			richTextBox1->Clear();
-			richTextBox1->AppendText(String::Format("Тестовая задача (n = {0})\n", N));
+			richTextBox1->AppendText(
+				String::Format("Тестовая задача (n = {0})\n", N)
+			);
 			richTextBox1->AppendText(
 				String::Format("max|u_i - v_i| = {0:E6} при x = {1:F6}\n",
 					maxErrorForN, xAtMaxErr)
 			);
 		}
-		// ---------- ОСНОВНАЯ ЗАДАЧА (№1 и №2) ----------
-		else if (Task == 2 || Task == 3) {
-			bool isSecond = (Task == 3);
 
+		// =================== ОСНОВНАЯ ЗАДАЧА (ОДНА) ===================
+		else if (Task == 2) {
 			MainTask solverMain(N);
 			std::vector<std::pair<double, double>> series, series2, raz;
 			std::vector<std::vector<double>> table;
 			solverMain.calculate(series, series2, raz, table);
 
-			// Таблица 1
+			// --------- Таблица 1: i, x_i, v_i, v2(2i), |v_i - v2(2i)| ----------
 			array<String^>^ columnNames1 = { "i", "x_i", "v_i", "v2(2i)", "|v_i - v2(2i)|" };
-			for each (String ^ colName in columnNames1)
+			for each (String ^ colName in columnNames1) {
 				dataGridView1->Columns->Add(colName, colName);
+			}
 
 			double maxError2 = 0.0;
 			double xAtMaxErr2 = 0.0;
@@ -847,11 +836,11 @@ namespace Graph {
 			for (int i = 0; i < (int)table.size(); ++i) {
 				int rowIndex = dataGridView1->Rows->Add();
 
-				dataGridView1->Rows[rowIndex]->Cells[0]->Value = table[i][0];
-				dataGridView1->Rows[rowIndex]->Cells[1]->Value = table[i][1];
-				dataGridView1->Rows[rowIndex]->Cells[2]->Value = table[i][2];
-				dataGridView1->Rows[rowIndex]->Cells[3]->Value = table[i][3];
-				dataGridView1->Rows[rowIndex]->Cells[4]->Value = table[i][4];
+				dataGridView1->Rows[rowIndex]->Cells[0]->Value = table[i][0]; // i
+				dataGridView1->Rows[rowIndex]->Cells[1]->Value = table[i][1]; // x_i
+				dataGridView1->Rows[rowIndex]->Cells[2]->Value = table[i][2]; // v_i
+				dataGridView1->Rows[rowIndex]->Cells[3]->Value = table[i][3]; // v2(2i)
+				dataGridView1->Rows[rowIndex]->Cells[4]->Value = table[i][4]; // |v_i - v2(2i)|
 
 				double err = fabs(table[i][4]);
 				if (err > maxError2) {
@@ -864,10 +853,11 @@ namespace Graph {
 				err_list->Add(table[i][1], err);
 			}
 
-			// Таблица 2 (табл.5)
+			// --------- Таблица 2: порядок сходимости основной задачи ----------
 			array<String^>^ columnNames2 = { "n", "max|v_i - v2(2i)|", "Отношение" };
-			for each (String ^ colName in columnNames2)
+			for each (String ^ colName in columnNames2) {
 				dataGridView2->Columns->Add(colName, colName);
+			}
 
 			double prevEps2 = -1.0;
 			for (int k = 0; k < (int)nValues.size(); ++k) {
@@ -888,13 +878,15 @@ namespace Graph {
 				int rowIndex = dataGridView2->Rows->Add();
 				dataGridView2->Rows[rowIndex]->Cells[0]->Value = nCurr;
 				dataGridView2->Rows[rowIndex]->Cells[1]->Value = E2;
-				if (prevEps2 > 0.0)
+
+				if (prevEps2 > 0.0) {
 					dataGridView2->Rows[rowIndex]->Cells[2]->Value = prevEps2 / E2;
+				}
 
 				prevEps2 = E2;
 			}
 
-			// Таблица 3 (табл.6: E1 из тестовой и E2 из основной задачи)
+			// --------- Таблица 3: одновременно E1 и E2 ----------
 			array<String^>^ columnNames3 = {
 				"n",
 				"E1 = max|u_i - v_i|",
@@ -903,14 +895,15 @@ namespace Graph {
 				"-lg E1",
 				"-lg E2"
 			};
-			for each (String ^ colName in columnNames3)
+			for each (String ^ colName in columnNames3) {
 				dataGridView3->Columns->Add(colName, colName);
+			}
 
 			for (int k = 0; k < (int)nValues.size(); ++k) {
 				int nCurr = nValues[k];
 				if (nCurr < 3 || nCurr > N) continue;
 
-				// E1 – тестовая задача
+				// E1 – из тестовой задачи
 				TestTask solverTestN(nCurr);
 				std::vector<std::vector<double>> resTestN = solverTestN.calculate();
 				double E1 = 0.0;
@@ -919,7 +912,7 @@ namespace Graph {
 					if (e > E1) E1 = e;
 				}
 
-				// E2 – основная задача
+				// E2 – из основной задачи
 				MainTask solverMainN(nCurr);
 				std::vector<std::pair<double, double>> s, s2, r;
 				std::vector<std::vector<double>> tabMainN;
@@ -944,21 +937,19 @@ namespace Graph {
 				dataGridView3->Rows[rowIndex]->Cells[5]->Value = lgE2;
 			}
 
-			// Графики
+			// --------- Графики основной задачи ----------
 			double xMin = Convert::ToDouble(scaleX0->Text);
 			double xMax = Convert::ToDouble(scaleX1->Text);
 			double yMin = Convert::ToDouble(scaleY0->Text);
 			double yMax = Convert::ToDouble(scaleY1->Text);
 
-			System::String^ suffix = isSecond ? " №2" : " №1";
-
-			panel->Title->Text = "Основная задача" + suffix + ": v(x) и v2(x)";
+			panel->Title->Text = "Основная задача: v(x) и v2(x)";
 			panel->XAxis->Title->Text = "x";
 			panel->YAxis->Title->Text = "u(x)";
 			panel->AddCurve("v(x)", f1_list, System::Drawing::Color::Blue, SymbolType::None);
 			panel->AddCurve("v2(x)", f2_list, System::Drawing::Color::Red, SymbolType::None);
 
-			panel2->Title->Text = "Основная задача" + suffix + ": |v(x) - v2(x)|";
+			panel2->Title->Text = "Основная задача: |v(x) - v2(x)|";
 			panel2->XAxis->Title->Text = "x";
 			panel2->YAxis->Title->Text = "|v - v2|";
 			panel2->AddCurve("|v-v2|", err_list, System::Drawing::Color::Green, SymbolType::None);
@@ -978,10 +969,10 @@ namespace Graph {
 			zedGraphControl2->AxisChange();
 			zedGraphControl2->Invalidate();
 
-			// текстовая сводка
+			// --------- Справка ---------
 			richTextBox1->Clear();
 			richTextBox1->AppendText(
-				String::Format("Основная задача{0} (n = {1})\n", suffix, N)
+				String::Format("Основная задача (n = {0})\n", N)
 			);
 			richTextBox1->AppendText(
 				String::Format("max|v_i - v2(2i)| = {0:E6} при x = {1:F6}\n",
