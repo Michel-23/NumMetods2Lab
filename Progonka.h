@@ -178,10 +178,20 @@ public:
 		task1.progonka();
 		V = task1.getV();
 
+
 		// Инициализация серии
-		series.emplace_back(0.0, 1.0);
-		seriesTrue.emplace_back(0.0, 1.0);
+		// было неправильно захардкожено значение 1.0, граничное значение здесь mu1
+		// series.emplace_back(0.0, 1.0);
+		// seriesTrue.emplace_back(0.0, 1.0);
+		series.emplace_back(0.0, mu1);       // корректное значение на левом краю
+		seriesTrue.emplace_back(0.0, mu1);   // то же для точного решения
 		raz.emplace_back(0.0, 0.0);
+		// Инициализация серии
+		/*series.emplace_back(0.0, 1.0);
+		seriesTrue.emplace_back(0.0, 1.0);
+		raz.emplace_back(0.0, 0.0);*/
+
+
 
 		// Заполняем таблицу для первого узла
 		table[0][0] = 0; // индекс 
