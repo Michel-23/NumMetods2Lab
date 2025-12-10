@@ -23,12 +23,6 @@
     <ClInclude Include="MyForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RungeKutaSolver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SolverResult.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Progonka.h">
       <Filter>Header Files</Filter>
     </ClInclude>

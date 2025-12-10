@@ -710,16 +710,26 @@ namespace Graph {
 				err_list->Add(result[i][1], err);
 			}
 
-			// --------- Таблица 2: порядок сходимости (по n) ----------
+			// --------- Таблица 2: порядок сходимости (красивое удвоение) ----------
+			dataGridView2->Rows->Clear(); // На всякий случай чистим
+			dataGridView2->Columns->Clear();
+
 			array<String^>^ columnNames2 = { "n", "max|u_i - v_i|", "Отношение" };
 			for each (String ^ colName in columnNames2) {
 				dataGridView2->Columns->Add(colName, colName);
 			}
 
+			// Строгое удвоение шага для проверки порядка сходимости
+			std::vector<int> doublingNs = { 10, 20, 40, 80, 160, 320, 640, 1280 };
+
 			double prevError = -1.0;
-			for (int k = 0; k < (int)nValues.size(); ++k) {
-				int nCurr = nValues[k];
-				if (nCurr < 3 || nCurr > N) continue;
+
+			for (int k = 0; k < (int)doublingNs.size(); ++k) {
+				int nCurr = doublingNs[k];
+
+				// Если текущий n больше, чем заданный в N Max, прерываем, 
+				// чтобы не считать слишком долго (или убери эту строку, если хочешь считать всегда)
+				if (nCurr > N) break;
 
 				TestTask solverN(nCurr);
 				std::vector<std::vector<double>> resN = solverN.calculate();
@@ -735,17 +745,21 @@ namespace Graph {
 				dataGridView2->Rows[rowIndex]->Cells[1]->Value = maxErr;
 
 				if (prevError > 0.0) {
+					// Тут теперь всегда должно быть около 4.0
 					dataGridView2->Rows[rowIndex]->Cells[2]->Value = prevError / maxErr;
 				}
 
 				prevError = maxErr;
 			}
 
-			// --------- Таблица 3: E1 и логарифмы (для тестовой задачи) ----------
+			// --------- Таблица 3: E1 и логарифмы (Широкий диапазон для методички) ----------
+			dataGridView3->Rows->Clear();
+			dataGridView3->Columns->Clear();
+
 			array<String^>^ columnNames3 = {
 				"n",
 				"E1 = max|u_i - v_i|",
-				"E2 = max|v_i - v2(2i)|",
+				"E2 = max|v_i - v2(2i)|", // Оставим пустым для тестовой
 				"lg n",
 				"-lg E1",
 				"-lg E2"
@@ -754,28 +768,41 @@ namespace Graph {
 				dataGridView3->Columns->Add(colName, colName);
 			}
 
-			for (int k = 0; k < (int)nValues.size(); ++k) {
-				int nCurr = nValues[k];
-				if (nCurr < 3 || nCurr > N) continue;
+			// СПИСОК ИЗ МЕТОДИЧКИ 
+			std::vector<int> wideRangeNs = {
+				10, 20, 50, 80, 100, 200, 500, 800, 1000,
+				10000, 100000, 1000000
+			};
 
+			for (int k = 0; k < (int)wideRangeNs.size(); ++k) {
+				int nCurr = wideRangeNs[k];
+
+				// 1. Решаем тестовую задачу
 				TestTask solverN(nCurr);
 				std::vector<std::vector<double>> resN = solverN.calculate();
 
+				// 2. Ищем максимальную ошибку E1
 				double E1 = 0.0;
 				for (int i = 0; i < (int)resN.size(); ++i) {
 					double e = fabs(resN[i][4]);
 					if (e > E1) E1 = e;
 				}
 
+				// 3. Заполняем строку таблицы
 				int rowIndex = dataGridView3->Rows->Add();
 				dataGridView3->Rows[rowIndex]->Cells[0]->Value = nCurr;
 				dataGridView3->Rows[rowIndex]->Cells[1]->Value = E1;
-				// E2 и -lg E2 оставляем пустыми, заполняются для основной задачи
+				// Cells[2] (E2) оставляем пустым, это для Основной задачи
 
+				// 4. Считаем логарифмы для графиков
 				double lgN = log10((double)nCurr);
-				double lgE1 = (E1 > 0.0) ? -log10(E1) : 0.0;
+
+				// Защита от логарифма нуля (если ошибка вдруг идеальный 0)
+				double lgE1 = (E1 > 1e-16) ? -log10(E1) : 0.0;
+
 				dataGridView3->Rows[rowIndex]->Cells[3]->Value = lgN;
 				dataGridView3->Rows[rowIndex]->Cells[4]->Value = lgE1;
+				// Cells[5] (-lg E2) оставляем пустым
 			}
 
 			// --------- Графики тестовой задачи ----------
@@ -821,7 +848,7 @@ namespace Graph {
 			);
 		}
 
-		// =================== ОСНОВНАЯ ЗАДАЧА (ОДНА) ===================
+		// =================== ОСНОВНАЯ ЗАДАЧА ===================
 		else if (Task == 2) {
 			MainTask solverMain(N);
 			std::vector<std::pair<double, double>> series, series2, raz;
@@ -857,23 +884,35 @@ namespace Graph {
 				err_list->Add(table[i][1], err);
 			}
 
-			// --------- Таблица 2: порядок сходимости основной задачи ----------
+			// --------- Таблица 2: порядок сходимости основной задачи (красивое удвоение) ----------
+			dataGridView2->Rows->Clear();
+			dataGridView2->Columns->Clear();
+
 			array<String^>^ columnNames2 = { "n", "max|v_i - v2(2i)|", "Отношение" };
 			for each (String ^ colName in columnNames2) {
 				dataGridView2->Columns->Add(colName, colName);
 			}
 
+			// Локальный список с удвоением для идеальных четверок
+			std::vector<int> doublingNs = { 10, 20, 40, 80, 160, 320, 640, 1280 };
+
 			double prevEps2 = -1.0;
-			for (int k = 0; k < (int)nValues.size(); ++k) {
-				int nCurr = nValues[k];
-				if (nCurr < 3 || nCurr > N) continue;
+
+			for (int k = 0; k < (int)doublingNs.size(); ++k) {
+				int nCurr = doublingNs[k];
+
+				// Если текущий n больше, чем заданный в N max, останавливаемся
+				if (nCurr > N) break;
 
 				MainTask solverN(nCurr);
 				std::vector<std::pair<double, double>> s, s2, r;
 				std::vector<std::vector<double>> tabN;
+
+				// Запускаем расчет
 				solverN.calculate(s, s2, r, tabN);
 
 				double E2 = 0.0;
+				// Ищем максимальную ошибку (разницу между v и v2)
 				for (int i = 0; i < (int)tabN.size(); ++i) {
 					double e = fabs(tabN[i][4]);
 					if (e > E2) E2 = e;
@@ -890,7 +929,10 @@ namespace Graph {
 				prevEps2 = E2;
 			}
 
-			// --------- Таблица 3: одновременно E1 и E2 ----------
+			// --------- Таблица 3: одновременно E1 и E2 (Широкий диапазон) ----------
+			dataGridView3->Rows->Clear();
+			dataGridView3->Columns->Clear();
+
 			array<String^>^ columnNames3 = {
 				"n",
 				"E1 = max|u_i - v_i|",
@@ -903,11 +945,17 @@ namespace Graph {
 				dataGridView3->Columns->Add(colName, colName);
 			}
 
-			for (int k = 0; k < (int)nValues.size(); ++k) {
-				int nCurr = nValues[k];
-				if (nCurr < 3 || nCurr > N) continue;
+			std::vector<int> wideRangeNs = {
+				10, 20, 50, 80, 100, 200, 500, 800, 1000,
+				10000, 100000, 1000000
+			};
 
-				// E1 – из тестовой задачи
+			for (int k = 0; k < (int)wideRangeNs.size(); ++k) {
+				int nCurr = wideRangeNs[k];
+
+				// Убрали проверку "if (nCurr > N)", чтобы считать всё до конца
+
+				// 1. Считаем E1 (из Тестовой задачи) — для сравнения
 				TestTask solverTestN(nCurr);
 				std::vector<std::vector<double>> resTestN = solverTestN.calculate();
 				double E1 = 0.0;
@@ -916,7 +964,7 @@ namespace Graph {
 					if (e > E1) E1 = e;
 				}
 
-				// E2 – из основной задачи
+				// 2. Считаем E2 (из Основной задачи) — оценка Рунге
 				MainTask solverMainN(nCurr);
 				std::vector<std::pair<double, double>> s, s2, r;
 				std::vector<std::vector<double>> tabMainN;
@@ -927,14 +975,18 @@ namespace Graph {
 					if (e > E2) E2 = e;
 				}
 
+				// 3. Заполняем строку
 				int rowIndex = dataGridView3->Rows->Add();
 				dataGridView3->Rows[rowIndex]->Cells[0]->Value = nCurr;
 				dataGridView3->Rows[rowIndex]->Cells[1]->Value = E1;
 				dataGridView3->Rows[rowIndex]->Cells[2]->Value = E2;
 
+				// 4. Считаем логарифмы
 				double lgN = log10((double)nCurr);
-				double lgE1 = (E1 > 0.0) ? -log10(E1) : 0.0;
-				double lgE2 = (E2 > 0.0) ? -log10(E2) : 0.0;
+
+				// Защита от log(0)
+				double lgE1 = (E1 > 1e-16) ? -log10(E1) : 0.0;
+				double lgE2 = (E2 > 1e-16) ? -log10(E2) : 0.0;
 
 				dataGridView3->Rows[rowIndex]->Cells[3]->Value = lgN;
 				dataGridView3->Rows[rowIndex]->Cells[4]->Value = lgE1;

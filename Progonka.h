@@ -107,6 +107,7 @@ public:
 	TestTask(int N) : nodes(N) {}
 
 	// --- Функции коэффициентов ---
+	// средняя проводимость k
 	double a(double x, double h) {
 		if (xi >= x)
 			return k1;
@@ -116,6 +117,7 @@ public:
 			return 1.0 / (1.0 / h * ((xi - (x - h)) / k1 + (x - xi) / k2));
 	}
 
+	// усредненное q (остывание стержня)
 	double d(double x, double h) {
 		if (xi >= x + h / 2.0)
 			return q1;
@@ -125,6 +127,7 @@ public:
 			return (1.0 / h) * (q1 * (xi - (x - h / 2.0)) + q2 * (x + h / 2.0 - xi));
 	}
 
+	// усредненное f (источник тепла)
 	double phi(double x, double h) {
 		if (xi >= x + h / 2.0)
 			return f1;
