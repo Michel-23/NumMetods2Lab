@@ -98,14 +98,15 @@ public:
 	double mu1 = 0.0;
 	double mu2 = 1.0;
 
-	// --- КОНСТАНТЫ АНАЛИТИЧЕСКОГО РЕШЕНИЯ ---
-	const double C1 = -65.15586;
-	const double C2 = 6.834245;
-	const double C3 = 123.53854;
-	const double C4 = -79.95333;
+	// сделал константы точнее
+	const double C1 = 0.060557222867;
+	const double C2 = -1.060557222867;
+	const double C3 = -0.472024550734;
+	const double C4 = -4.331084823580;
 
 	TestTask(int N) : nodes(N) {}
 
+	// --- Функции коэффициентов ---
 	double a(double x, double h) {
 		if (xi >= x)
 			return k1;
@@ -178,14 +179,20 @@ public:
 		task1.progonka();
 		V = task1.getV();
 
+
+		// Заранее посчитаем параметры лямбда
+		double lam1 = std::sqrt(q1 / k1);
+		double lam2 = std::sqrt(q2 / k2);
+
 		// Инициализация серии
-		series.emplace_back(0.0, 1.0);
-		seriesTrue.emplace_back(0.0, 1.0);
+		// тут вместо 1.0 поставил mu1
+		series.emplace_back(0.0, mu1);
+		seriesTrue.emplace_back(0.0, mu1);
 		raz.emplace_back(0.0, 0.0);
 
 
 		// Заполняем таблицу для первого узла
-		table[0][0] = 0; // индекс 
+		table[0][0] = 0; // индекс
 		table[0][1] = 0.0; // x 
 		table[0][2] = mu1;     // аналитическое
 		table[0][3] = V[0];    // вычисленное
@@ -196,24 +203,26 @@ public:
 		// --- Заполнение остальных узлов ---
 		for (int i = 1; i < nodes; i++) {
 			x += h;
-			series.emplace_back(x, V[i]);
-
-			table[i][0] = i;
-			table[i][1] = x;
-			table[i][3] = V[i];
 
 			// --- аналитическое решение ---
-			if (i == nodes - 1)
-				u = mu2;
-			else if (x < xi)
-				u = C1 * std::exp(std::sqrt(q1 / k1) * x) + C2 * std::exp(-std::sqrt(q1 / k1) * x) + f1 / q1;
+			/*if (i == nodes - 1)
+				u = 0;*/
+			if (x <= xi)
+				// вот тут вот эти лямбды и пригодились
+				// u = C1 * std::exp(-std::sqrt(2.0 / 7.0) * x) + C2 * std::exp(+std::sqrt(2.0 / 7.0) * x) + 1.0;
+				u = C1 * std::exp(lam1 * x) + C2 * std::exp(-lam1 * x) + f1 / q1;
 			else
-				u = C3 * std::exp(std::sqrt(q2 / k2) * x) + C4 * std::exp(-std::sqrt(q2 / k2) * x) + f2 / q2;
+				//u = C3 * std::exp(-std::sqrt(2.0 / 5.0) * x) + C4 * std::exp(+std::sqrt(2.0 / 5.0) * x) + std::exp(-0.4)/0.16;
+				u = C3 * std::exp(lam2 * x) + C4 * std::exp(-lam2 * x) + f2 / q2;
 
+			series.emplace_back(x, V[i]);
 			seriesTrue.emplace_back(x, u);
 
 			double error = std::abs(u - V[i]);
+			table[i][0] = i;
+			table[i][1] = x;
 			table[i][2] = u;
+			table[i][3] = V[i];
 			table[i][4] = error;
 			raz.emplace_back(x, error);
 		}
@@ -222,6 +231,154 @@ public:
 		// return raz;
 	}
 };
+
+
+// ==========================================
+// СТАРЫЙ ЗККОММЕНТИРОВАННЫЙ КЛАСС (ОСТАВЛЯЕМ ДЛЯ ИСТОРИИ)
+// ==========================================
+
+/*class TestTask {
+public:
+	int nodes;
+	double k1 = 1.4;
+	double k2 = 0.4;
+	double f1 = 0.4;
+	double f2 = std::exp(-0.4);
+	double q1 = 0.4;
+	double q2 = 0.16;
+	double xi = 0.4;
+	double mu1 = 0.0;
+	double mu2 = 1.0;
+
+	// --- КОНСТАНТЫ АНАЛИТИЧЕСКОГО РЕШЕНИЯ ---
+	//const double C1 = -1.06013088;
+	//const double C2 = 0.06013088;
+	//const double C3 = -4.33553141;
+	//const double C4 = -0.47148396;
+
+	// МЕНЯЮ
+	//const double C1 = -1.06011088;
+	//const double C2 = 0.06019088;
+	//const double C3 = -4.33550141;
+	//const double C4 = -0.47048096;
+
+	// --- ТОЧНЫЕ КОНСТАНТЫ (посчитаны аналитически) ---
+	const double C1 = -1.0575338692742136;
+	const double C2 = 0.0575338692742136;
+	// (В сумме C1+C2 дают -1.0, всё верно)
+
+	const double C3 = -4.3312781443574343;
+	const double C4 = -0.4721598218175402;
+
+	TestTask(int N) : nodes(N) {}
+
+	double a(double x, double h) {
+		if (xi >= x)
+			return k1;
+		else if (xi <= x - h)
+			return k2;
+		else
+			return 1.0 / (1.0 / h * ((xi - (x - h)) / k1 + (x - xi) / k2));
+	}
+
+	double d(double x, double h) {
+		if (xi >= x + h / 2.0)
+			return q1;
+		else if (xi <= x - h / 2.0)
+			return q2;
+		else
+			return (1.0 / h) * (q1 * (xi - (x - h / 2.0)) + q2 * (x + h / 2.0 - xi));
+	}
+
+	double phi(double x, double h) {
+		if (xi >= x + h / 2.0)
+			return f1;
+		else if (xi <= x - h / 2.0)
+			return f2;
+		else
+			return (1.0 / h) * (f1 * (xi - (x - h / 2.0)) + f2 * (x + h / 2.0 - xi));
+	}
+
+	/*
+	series — сюда записываются вычисленные значения V для каждого узла.
+	seriesTrue — сюда записываются точные значения u(x) для сравнения.
+
+	raz — массив ошибок(разница между точным решением и вычисленным).
+
+	table — матрица, которая будет содержать всю информацию по узлам : индекс, x, точное значение, вычисленное, ошибка.*/
+
+	/*
+		std::vector<std::vector<double>> calculate()
+		{
+			std::vector<std::pair<double, double>> series;
+			std::vector<std::pair<double, double>> seriesTrue;
+			std::vector<std::pair<double, double>> raz;
+			std::vector<std::vector<double>> table;
+			double x = 0.0;
+			double h = 1.0 / (nodes - 1);
+
+			std::vector<double> A(nodes, 0.0);
+			std::vector<double> B(nodes, 0.0);
+			std::vector<double> C(nodes, 0.0);
+			std::vector<double> Phi(nodes, 0.0);
+			std::vector<double> V(nodes, 0.0);
+
+			//Граничные условия
+			C[0] = 1.0; A[0] = 0.0; B[0] = 0.0; Phi[0] = mu1;
+
+			C[nodes - 1] = 1.0; A[nodes - 1] = 0.0; B[nodes - 1] = 0.0;
+			Phi[nodes - 1] = mu2;
+
+			// Инициализация таблицы (nodes x 5) nodes-количество строк, 5 - количество столбцов(индекс узла, коорд х, точное решение u(x), численное решение v(x), разница)
+			table.assign(nodes, std::vector<double>(5, 0.0));
+
+			// Заполнение коэффициентов для внутреннего узла
+			for (int i = 1; i < nodes - 1; i++) {
+				x += h;
+				// Твои функции a, d, phi (предполагаем, что они есть в классе)
+				double val_a = this->a(x, h);
+				double val_a_next = this->a(x + h, h);
+
+				A[i] = val_a / (h * h);
+				C[i] = -((val_a + val_a_next) / (h * h) + this->d(x, h));
+				B[i] = val_a_next / (h * h);
+				Phi[i] = -this->phi(x, h);
+			}
+
+			// Решение системы методом прогонки
+			Task task1(nodes);
+			task1.setProgonka(A, B, C, Phi);
+			task1.progonka();
+			V = task1.getV();
+
+
+			// Заполнение таблиц
+			double u = 0.0;
+			double lam1 = std::sqrt(q1 / k1); // Пересчитаем локально для формулы
+			double lam2 = std::sqrt(q2 / k2);
+
+			for (int i = 0; i < nodes; i++) {
+				double current_x = i * h;
+
+				// Точное аналитическое решение с нашими новыми C1..C4
+				if (current_x <= xi + 1e-9) // +1e-9 для надежности сравнения float
+					u = C1 * std::exp(lam1 * current_x) + C2 * std::exp(-lam1 * current_x) + f1 / q1;
+				else
+					u = C3 * std::exp(lam2 * current_x) + C4 * std::exp(-lam2 * current_x) + f2 / q2;
+
+				double error = std::abs(u - V[i]);
+
+				// Запись в таблицу
+				table[i][0] = i;
+				table[i][1] = current_x;
+				table[i][2] = u;
+				table[i][3] = V[i];
+				table[i][4] = error;
+			}
+			return table;
+		}
+	};
+	*/
 
 class MainTask {
 public:

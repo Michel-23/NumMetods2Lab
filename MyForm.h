@@ -816,7 +816,7 @@ namespace Graph {
 				String::Format("Тестовая задача (n = {0})\n", N)
 			);
 			richTextBox1->AppendText(
-				String::Format("max|u_i - v_i| = {0:E6} при x = {1:F6}\n",
+				String::Format("max|u_i - v_i| = {0:E6} при x = {1:F6}\n\n",
 					maxErrorForN, xAtMaxErr)
 			);
 		}
